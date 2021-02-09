@@ -1,4 +1,4 @@
-module kata.ai/messagebus-kafka-go
+module kata.ai/messagebus-golang-kafka
 
 go 1.12
 

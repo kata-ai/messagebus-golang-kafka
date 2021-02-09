@@ -2,7 +2,7 @@ package messagebus
 
 import (
 	"github.com/confluentinc/confluent-kafka-go/kafka"
-	"kata.ai/messagebus-kafka-go/messagebus/record"
+	"kata.ai/messagebus-golang-kafka/messagebus/record"
 )
 
 type IMessageBus interface {

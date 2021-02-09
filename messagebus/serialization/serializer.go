@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"encoding/binary"
 	"encoding/json"
+
 	"github.com/confluentinc/confluent-kafka-go/kafka"
-	"kata.ai/messagebus-kafka-go/messagebus/record"
+	"kata.ai/messagebus-golang-kafka/messagebus/record"
 )
 
 type Serializer struct {

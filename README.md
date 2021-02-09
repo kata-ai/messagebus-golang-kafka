@@ -9,10 +9,10 @@ Since this library does not reside in a Go Proxy repository, you need to use it 
 ```
 require (
     ...
-    kata.ai/messagebus-kafka-go v1.1.0
+    kata.ai/messagebus-golang-kafka v1.1.0
 )
 
-replace kata.ai/messagebus-kafka-go => ../shared-libs/golang/messagebus-kafka/1.1.0
+replace kata.ai/messagebus-golang-kafka => ../shared-libs/golang/messagebus-kafka/1.1.0
 ```
 
 The replace directive is filled with this library's module name and its relative path to your project.

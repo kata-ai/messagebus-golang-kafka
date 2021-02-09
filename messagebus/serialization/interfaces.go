@@ -1,9 +1,10 @@
 package serialization
 
 import (
-	"github.com/confluentinc/confluent-kafka-go/kafka"
-	"kata.ai/messagebus-kafka-go/messagebus/record"
 	"time"
+
+	"github.com/confluentinc/confluent-kafka-go/kafka"
+	"kata.ai/messagebus-golang-kafka/messagebus/record"
 )
 
 type ISerializer interface {
