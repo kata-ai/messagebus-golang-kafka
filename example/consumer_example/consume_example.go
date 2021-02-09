@@ -6,9 +6,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	"kata.ai/messagebus-golang-kafka/messagebus"
-	"kata.ai/messagebus-golang-kafka/messagebus/consumer"
-	"kata.ai/messagebus-golang-kafka/messagebus/serialization"
+	"github.com/kata-ai/messagebus-golang-kafka/messagebus"
+	"github.com/kata-ai/messagebus-golang-kafka/messagebus/consumer"
+	"github.com/kata-ai/messagebus-golang-kafka/messagebus/serialization"
 )
 
 type handler struct {

@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
-	"kata.ai/messagebus-golang-kafka/messagebus/record"
+	"github.com/kata-ai/messagebus-golang-kafka/messagebus/record"
 )
 
 type Serializer struct {

@@ -1,6 +1,6 @@
 package messagebus
 
-import "kata.ai/messagebus-golang-kafka/messagebus/record"
+import "github.com/kata-ai/messagebus-golang-kafka/messagebus/record"
 
 type replyHandler struct {
 	resultChan    chan *record.ConsumerRecord

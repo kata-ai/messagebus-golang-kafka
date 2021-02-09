@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"time"
 
-	"kata.ai/messagebus-golang-kafka/example/schemas"
-	"kata.ai/messagebus-golang-kafka/messagebus"
-	"kata.ai/messagebus-golang-kafka/messagebus/producer"
-	"kata.ai/messagebus-golang-kafka/messagebus/record"
-	"kata.ai/messagebus-golang-kafka/messagebus/serialization"
+	"github.com/kata-ai/messagebus-golang-kafka/example/schemas"
+	"github.com/kata-ai/messagebus-golang-kafka/messagebus"
+	"github.com/kata-ai/messagebus-golang-kafka/messagebus/producer"
+	"github.com/kata-ai/messagebus-golang-kafka/messagebus/record"
+	"github.com/kata-ai/messagebus-golang-kafka/messagebus/serialization"
 )
 
 func main() {
