@@ -7,8 +7,6 @@ import (
 	"syscall"
 
 	"github.com/kata-ai/messagebus-golang-kafka/messagebus"
-	"github.com/kata-ai/messagebus-golang-kafka/messagebus/consumer"
-	"github.com/kata-ai/messagebus-golang-kafka/messagebus/serialization"
 )
 
 type handler struct {
@@ -20,11 +18,11 @@ func (h handler) HandleMessage(context messagebus.MessageContext) {
 }
 
 func main() {
-	consumerConfig := consumer.NewConsumerConfig(
+	consumerConfig := messagebus.NewConsumerConfig(
 		"messagebus-golang",
-		consumer.WithSASLAuth(
-			consumer.SASL_PLAINTEXT,
-			consumer.SCRAM_SHA_512,
+		messagebus.WithConsumerSASLAuth(
+			messagebus.SASL_PLAINTEXT,
+			messagebus.SCRAM_SHA_512,
 			"kafka-dev",
 			"Cfhj5nJ6Fy1W",
 		),
@@ -35,7 +33,7 @@ func main() {
 	bus, err := messagebus.NewMessageBus(
 		brokers,
 		"http://ab14371f4e314424c9eeeb6c4eb707b3-143588661.ap-southeast-1.elb.amazonaws.com:8081",
-		serialization.RECORD_NAME_STRATEGY,
+		messagebus.RECORD_NAME_STRATEGY,
 		nil,
 		consumerConfig,
 	)

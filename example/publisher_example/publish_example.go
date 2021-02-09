@@ -6,17 +6,14 @@ import (
 
 	"github.com/kata-ai/messagebus-golang-kafka/example/schemas"
 	"github.com/kata-ai/messagebus-golang-kafka/messagebus"
-	"github.com/kata-ai/messagebus-golang-kafka/messagebus/producer"
-	"github.com/kata-ai/messagebus-golang-kafka/messagebus/record"
-	"github.com/kata-ai/messagebus-golang-kafka/messagebus/serialization"
 )
 
 func main() {
-	producerConfig := producer.NewProducerConfig(
-		producer.WithCompressionType("gzip"),
-		producer.WithSASLAuth(
-			producer.SASL_PLAINTEXT,
-			producer.SCRAM_SHA_512,
+	producerConfig := messagebus.NewProducerConfig(
+		messagebus.WithCompressionType("gzip"),
+		messagebus.WithProducerSASLAuth(
+			messagebus.SASL_PLAINTEXT,
+			messagebus.SCRAM_SHA_512,
 			"kafka-dev",
 			"Cfhj5nJ6Fy1W",
 		),
@@ -27,7 +24,7 @@ func main() {
 	bus, err := messagebus.NewMessageBus(
 		brokers,
 		"http://ab14371f4e314424c9eeeb6c4eb707b3-143588661.ap-southeast-1.elb.amazonaws.com:8081",
-		serialization.RECORD_NAME_STRATEGY,
+		messagebus.RECORD_NAME_STRATEGY,
 		producerConfig,
 		nil,
 	)
@@ -40,11 +37,11 @@ func main() {
 		Name: "johnny",
 		Age:  21,
 	}
-	key, err := record.NewMessageKey("messagebus_test")
+	key, err := messagebus.NewMessageKey("messagebus_test")
 	if err != nil {
 		panic(err)
 	}
-	message := &record.ProducerRecord{
+	message := &messagebus.ProducerRecord{
 		Key:   key,
 		Value: value,
 	}

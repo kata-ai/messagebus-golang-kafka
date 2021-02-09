@@ -8,22 +8,18 @@ import (
 	"time"
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
-	"github.com/kata-ai/messagebus-golang-kafka/messagebus/consumer"
-	"github.com/kata-ai/messagebus-golang-kafka/messagebus/producer"
-	"github.com/kata-ai/messagebus-golang-kafka/messagebus/record"
-	"github.com/kata-ai/messagebus-golang-kafka/messagebus/serialization"
 )
 
 type MessageBus struct {
 	Producer       *kafka.Producer
 	Consumer       *kafka.Consumer
 	Handlers       map[string]Handler
-	Serializer     serialization.ISerializer
+	Serializer     ISerializer
 	Subscriptions  []string
 	stopChan       chan bool
 	rpcTimeoutMs   int
-	producerConfig *producer.ProducerConfiguration
-	consumerConfig *consumer.ConsumerConfiguration
+	producerConfig *ProducerConfiguration
+	consumerConfig *ConsumerConfiguration
 }
 
 type MessageBusOption func(m *MessageBus)
@@ -31,7 +27,7 @@ type MessageBusOption func(m *MessageBus)
 // NewMessageBus -> Create new instance of message bus
 // It returns a pointer for message bus object and an error
 // Error is nil if message bus instantiation is successful
-func NewMessageBus(brokerList []string, schemaRegistry string, strategy serialization.SubjectStrategy, producerConfig *producer.ProducerConfiguration, consumerConfig *consumer.ConsumerConfiguration, opts ...MessageBusOption) (*MessageBus, error) {
+func NewMessageBus(brokerList []string, schemaRegistry string, strategy SubjectStrategy, producerConfig *ProducerConfiguration, consumerConfig *ConsumerConfiguration, opts ...MessageBusOption) (*MessageBus, error) {
 	brokers := strings.Join(brokerList, ",")
 
 	var err error
@@ -56,7 +52,7 @@ func NewMessageBus(brokerList []string, schemaRegistry string, strategy serializ
 		}
 	}
 
-	serializer, err := serialization.NewSerializer(schemaRegistry, strategy)
+	serializer, err := NewSerializer(schemaRegistry, strategy)
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +90,7 @@ func (m *MessageBus) RegisterHandler(topic string, handler Handler) {
 // Send message to a topic
 // Returns kafka offset object and error
 // Error is nil if send operation is successful
-func (m MessageBus) Send(service string, message *record.ProducerRecord) (kafka.Offset, error) {
+func (m MessageBus) Send(service string, message *ProducerRecord) (kafka.Offset, error) {
 	serializedRecord, err := m.Serializer.Serialize(service, message)
 	if err != nil {
 		return -1, err
@@ -210,7 +206,7 @@ func (m *MessageBus) Disconnect() error {
 
 // Request-response pattern
 // May not work properly with Kafka since it is not designed to do request-response pattern
-func (m *MessageBus) Request(service string, message *record.ProducerRecord) (*record.ConsumerRecord, error) {
+func (m *MessageBus) Request(service string, message *ProducerRecord) (*ConsumerRecord, error) {
 	if m.Consumer == nil {
 		return nil, errors.New("consumer not instantiated")
 	}
@@ -219,7 +215,7 @@ func (m *MessageBus) Request(service string, message *record.ProducerRecord) (*r
 		return nil, errors.New("message should have reply topic")
 	}
 
-	resultChan := make(chan *record.ConsumerRecord)
+	resultChan := make(chan *ConsumerRecord)
 	defer close(resultChan)
 
 	m.RegisterHandler(replyTopic, replyHandler{

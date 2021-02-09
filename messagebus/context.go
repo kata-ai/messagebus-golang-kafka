@@ -4,15 +4,14 @@ import (
 	"errors"
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
-	"github.com/kata-ai/messagebus-golang-kafka/messagebus/record"
 )
 
 type MessageContext struct {
-	Incoming *record.ConsumerRecord
+	Incoming *ConsumerRecord
 	Sender   IMessageBus
 }
 
-func (m MessageContext) Reply(record *record.ProducerRecord) (offset kafka.Offset, err error) {
+func (m MessageContext) Reply(record *ProducerRecord) (offset kafka.Offset, err error) {
 	if m.Incoming.Key.ReplyTopic == "" {
 		return -1, errors.New("reply topic undefined")
 	}
